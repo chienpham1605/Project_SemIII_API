@@ -12,7 +12,7 @@
         public string sender_phone { get; set; }
         public string sender_email { get; set; }
         public string sender_national_identity_number { get; set; }
-
+        
         public string receiver_name { get; set; }
         public string receiver_pincode { get; set; }
         public string receiver_address { get; set; }
