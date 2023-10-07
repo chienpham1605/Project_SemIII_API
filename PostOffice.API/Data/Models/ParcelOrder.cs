@@ -1,7 +1,12 @@
-﻿namespace PostOffice.API.Data.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PostOffice.API.Data.Models
 {
     public class ParcelOrder
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         //personal infor
         public string user_id { get; set; }        
@@ -45,6 +50,10 @@
         public ParcelService ParcelService { get; set; }
         public ParcelType ParcelType { get; set; }
 
-        public Pincode Pincode { get; set; }
+        public Pincode SenderPincode { get; set; }
+        public Pincode ReceiverPincode { get; set; }
+
+        public AppUser AppUser { get; set; }
+        public ICollection <TrackHistory> OrderHistory { get; set; }
     }
 }

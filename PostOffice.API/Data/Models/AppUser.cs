@@ -14,6 +14,6 @@ namespace PostOffice.API.Data.Models
 
         public ICollection<ParcelOrder> ParcelOrders { get; set; }
 
-        
+        public ICollection<TrackHistory> History { get; set; }
     }
 }

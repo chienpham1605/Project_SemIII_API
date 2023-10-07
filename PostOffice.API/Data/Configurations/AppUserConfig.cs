@@ -12,7 +12,7 @@ namespace PostOffice.API.Data.Configurations
                 builder.Property(x => x.FirstName).IsRequired().HasMaxLength(200);
                 builder.Property(x => x.LastName).IsRequired().HasMaxLength(200);
                 builder.Property(x => x.Create_date).IsRequired();
-
+                builder.HasMany(x => x.ParcelOrders).WithOne(u => u.AppUser).HasForeignKey(x => x.user_id);
             }
         }    
 }

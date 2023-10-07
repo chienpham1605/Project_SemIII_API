@@ -12,5 +12,6 @@ namespace PostOffice.API.Data.Models
         public Area Area { get; set; }
 
         public ICollection<OfficeBranch> OfficeBranches { get; set; }
+        public ICollection<ParcelOrder> ParcelOrders { get; set; }
     }
 }
