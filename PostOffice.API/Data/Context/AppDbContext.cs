@@ -20,7 +20,9 @@ namespace PostOffice.API.Data.Context
             builder.ApplyConfiguration(new AreaConfig());
             builder.ApplyConfiguration(new PincodeConfig());
             builder.ApplyConfiguration(new OfficeBranchConfig());
-
+            builder.ApplyConfiguration( new MoneyOrderConfig());
+            builder.ApplyConfiguration(new MoneyScopeConfig());
+            builder.ApplyConfiguration(new MoneyServicePriceConfig());
 
             builder.ApplyConfiguration(new AppUserConfig());
             builder.ApplyConfiguration(new AppRoleConfig());
@@ -51,7 +53,12 @@ namespace PostOffice.API.Data.Context
         public DbSet<Area> Areas { get; set; }
         public DbSet<Pincode> Pincodes { get; set; }
         public DbSet<Area> OfficeBranchs { get; set; }
-        
+
+        public DbSet<MoneyOrder> MoneyOrders { get; set; }
+        public DbSet<MoneyScope> MoneyScopes { get; set; }
+
+        public DbSet<MoneyServicePrice> MoneyServicePrices { get; set; }
+
 
 
     }
