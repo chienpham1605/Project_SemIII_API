@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "JmrJVxyORmrw8vVvAzf4+He/yBOcPoD5rFEJw79OQV4=",
+  "Source": "PostOffice.API",
+  "BasePath": "_content/PostOffice.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

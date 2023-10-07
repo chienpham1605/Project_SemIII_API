@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\PostOffice.API.props" />
+</Project>
