@@ -1,10 +1,10 @@
-# ASP.NET Core 6.0 project
+# ASP.NET Core Web API 6.0 project
 
 ## Technologies
-- ASP.NET Core 6.0
+- ASP.NET Core Web API 6.0
 - Entity Framework Core
 ## Install package
-- Microsoft.AspNetCore.Identity.EntityFrameworkCore -6.0.22
+- Microsoft.AspNetCore.Identity.EntityFrameworkCore --6.0.22
 - Microsoft.EntityFrameworkCore.SqlServer -- 6.0.22
 - Microsoft.EntityFrameworkCore.Tools -- 6.0.22
 - Microsoft.EntityFrameworkCore.Design -- 6.0.22
