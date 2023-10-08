@@ -15,3 +15,4 @@
 ## How to configure and run
 - Delete folder Migration
 - Go to Tool/Nuget Package Manager/Nuget Package Console, run add-migration initDB, and then run update-database
+- Change ConnectionStrings in file appsetting.json
