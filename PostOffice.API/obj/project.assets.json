@@ -11359,26 +11359,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Thang\\.nuget\\packages\\": {}
+    "C:\\Users\\HP\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\APTECH SEM 3\\Project_Sem3\\Server\\PostOffice.API\\PostOffice.API\\PostOffice.API.csproj",
+      "projectUniqueName": "C:\\Users\\HP\\Documents\\GitHub\\Project_SemIII_API\\PostOffice.API\\PostOffice.API.csproj",
       "projectName": "PostOffice.API",
-      "projectPath": "D:\\APTECH SEM 3\\Project_Sem3\\Server\\PostOffice.API\\PostOffice.API\\PostOffice.API.csproj",
-      "packagesPath": "C:\\Users\\Thang\\.nuget\\packages\\",
-      "outputPath": "D:\\APTECH SEM 3\\Project_Sem3\\Server\\PostOffice.API\\PostOffice.API\\obj\\",
+      "projectPath": "C:\\Users\\HP\\Documents\\GitHub\\Project_SemIII_API\\PostOffice.API\\PostOffice.API.csproj",
+      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\HP\\Documents\\GitHub\\Project_SemIII_API\\PostOffice.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Thang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -11462,6 +11461,12 @@
     }
   },
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\HP\\Documents\\GitHub\\Project_SemIII_API\\PostOffice.API\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1701",
       "level": "Warning",
