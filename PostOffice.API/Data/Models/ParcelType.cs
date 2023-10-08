@@ -11,6 +11,7 @@
         public float max_weight { get; set; }
         public float over_dimension_rate { get; set; }
 
-        public ParcelServicePrice Price { get; set; }
+        public ParcelServicePrice ParcelServicePrice { get; set; }
+        public ICollection<ParcelOrder> ParcelOrders { get; set; }
     }
 }

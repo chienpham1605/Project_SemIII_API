@@ -8,7 +8,7 @@ namespace PostOffice.API.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<MoneyScope> builder)
         {
-            builder.ToTable("money_scope");
+            builder.ToTable("MoneyScope");
 
             builder.Property(e => e.id).HasColumnName("id");
             builder.Property(e => e.description)

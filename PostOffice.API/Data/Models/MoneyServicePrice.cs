@@ -8,5 +8,6 @@
         public float fee { get; set; }
 
         public ICollection<MoneyScope> MoneyScopes { get; set; }
+        public ICollection<ZoneType> ZoneTypes { get; set; }
     }
 }

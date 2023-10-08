@@ -9,15 +9,17 @@ namespace PostOffice.API.Data.Configurations
         public void Configure(EntityTypeBuilder<ParcelService> builder)
         {
             builder.ToTable("ParcelServices");
-            builder.HasKey(p => p.id);
+            builder.HasKey(p => p.service_id);
             builder.Property(p => p.name).IsRequired();
             builder.Property(p => p.description).IsRequired();
             builder.Property(p => p.delivery_time).IsRequired();
             builder.Property(p => p.status).IsRequired();
 
-            builder.HasOne(p => p.Price).WithMany(a => a.service_id).HasForeignKey(a => a.area_id).IsRequired();
+            builder.HasOne(p => p.ParcelServicePrice).WithMany(a => a.ParcelServices).HasForeignKey(a => a.service_id).IsRequired();
 
-            builder.HasMany(p => p.OfficeBranches).WithOne(a => a.Pincode).HasForeignKey(a => a.pincode).IsRequired();
+            builder.HasMany(e => e.ParcelOrders)
+                .WithOne(o => o.ParcelService).HasForeignKey(o => o.service_id);
+
         }
     }
 }

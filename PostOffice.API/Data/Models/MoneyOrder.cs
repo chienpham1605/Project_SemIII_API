@@ -4,7 +4,7 @@
     {
         public int id { get; set; }
         //personal infor
-        public string user_id { get; set; }
+        public Guid user_id { get; set; }
 
         public string sender_name { get; set; }
         public string sender_pincode { get; set; }
@@ -12,7 +12,7 @@
         public string sender_phone { get; set; }
         public string sender_email { get; set; }
         public string sender_national_identity_number { get; set; }
-        
+
         public string receiver_name { get; set; }
         public string receiver_pincode { get; set; }
         public string receiver_address { get; set; }
@@ -40,10 +40,10 @@
         //charge infor         
         public float total_charge { get; set; }
 
-        
-        
 
-        public Pincode Pincode { get; set; }
+        public Pincode MoneySenderPincode { get; set; }
+        public Pincode MoneyReceiverPincode { get; set; }
+        public AppUser AppUser { get; set; }             
         public MoneyServicePrice MoneyServicePrice { get; set; }
     }
 }
