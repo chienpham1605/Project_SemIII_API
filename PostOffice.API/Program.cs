@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PostOffice.API.Data.Context;
 using PostOffice.API.Data.Models;
+using PostOffice.API.Repositories.MoneyOrder;
+using PostOffice_Server.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 // For Entity Framework
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultDatabase")));
-
+builder.Services.AddScoped<IMoneyOrder, MoneyOrderService>();
 // For Identity
 builder.Services.AddIdentity<AppUser, AppRole>(options =>
 {

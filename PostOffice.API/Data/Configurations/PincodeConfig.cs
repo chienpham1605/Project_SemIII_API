@@ -12,11 +12,10 @@ namespace PostOffice.API.Data.Configurations
             builder.ToTable("Pincodes");
             builder.HasKey(p => p.pincode);
             builder.Property(p => p.city_name).IsRequired();     
-            
-
             builder.HasOne(p => p.Area).WithMany(a => a.Pincodes).HasForeignKey(a =>a.area_id).IsRequired();
-
-            builder.HasMany(p => p.OfficeBranches).WithOne(a => a.Pincode).HasForeignKey(a => a.pincode).IsRequired();
+            builder.HasMany(p => p.OfficeBranches).WithOne(a => a.Pincode)
+                .HasForeignKey(a => a.pincode).IsRequired();           
+           
 
         }
     }

@@ -97,6 +97,13 @@ namespace PostOffice.API.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.ToTable("AppUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
+                            RoleId = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
@@ -117,6 +124,64 @@ namespace PostOffice.API.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("AppUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("PostOffice.API.Data.DTOs.MoneyScope.MoneyScopeDTO", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("max_value")
+                        .HasColumnType("real");
+
+                    b.Property<float>("min_value")
+                        .HasColumnType("real");
+
+                    b.HasKey("id");
+
+                    b.ToTable("MoneyScopeCreateDTO");
+                });
+
+            modelBuilder.Entity("PostOffice.API.Data.DTOs.MoneyServicePriceDTO.MoneyServicePriceDTO", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<int>("money_scope_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("zone_type_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("MoneyServicePriceDTO");
+                });
+
+            modelBuilder.Entity("PostOffice.API.Data.DTOs.ZoneType.ZoneTypeDTO", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<string>("zone_description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("ZoneTypeDTO");
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.AppRole", b =>
@@ -142,6 +207,16 @@ namespace PostOffice.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
+                            ConcurrencyStamp = "d7444940-efd6-462d-9fba-9266269e698b",
+                            Description = "Administrator role",
+                            Name = "admin",
+                            NormalizedName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.AppUser", b =>
@@ -208,6 +283,27 @@ namespace PostOffice.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AppUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "c06376fc-9b48-4ef0-9c87-b703aeb0c270",
+                            Create_date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "onlinepostofficegroup4@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Pham",
+                            LastName = "Chien",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "onlinepostofficegroup4@gmail.com",
+                            NormalizedUserName = "admin",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF7fgEdZ4MUU+uSxcepcNuRQyaFfb7U6vbC+A7/aznwTeK5mwL6ZGaJnRWOTz2Eilw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.Area", b =>
@@ -235,80 +331,78 @@ namespace PostOffice.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<Guid?>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("MoneyServicePriceid")
+                    b.Property<int?>("MoneyServicePriceid")
                         .HasColumnType("int");
 
                     b.Property<string>("note")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("parcel_type_id")
                         .HasColumnType("int");
 
                     b.Property<string>("payer")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("pincode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("receive_date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("receiver_address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("receiver_email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("receiver_name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("receiver_national_identity_number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("receiver_phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("receiver_pincode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("send_date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("sender_address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("sender_email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("sender_name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("sender_national_identity_number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("sender_phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("sender_pincode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("service_id")
                         .HasColumnType("int");
@@ -319,54 +413,50 @@ namespace PostOffice.API.Migrations
                     b.Property<float>("transfer_fee")
                         .HasColumnType("real");
 
-                    b.Property<string>("transfer_status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("transfer_status")
+                        .HasColumnType("int");
 
                     b.Property<float>("transfer_value")
                         .HasColumnType("real");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("user_id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("id");
 
-                    b.HasIndex("AppUserId");
-
                     b.HasIndex("MoneyServicePriceid");
 
-                    b.HasIndex("pincode");
+                    b.HasIndex("receiver_pincode");
 
-                    b.ToTable("MoneyOrder");
+                    b.HasIndex("sender_pincode");
+
+                    b.HasIndex("user_id");
+
+                    b.ToTable("MoneyOrder", (string)null);
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.MoneyScope", b =>
                 {
                     b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("Priceid")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("description");
 
                     b.Property<float>("max_value")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("max_value");
 
                     b.Property<float>("min_value")
-                        .HasColumnType("real");
+                        .HasColumnType("real")
+                        .HasColumnName("min_value");
 
                     b.HasKey("id");
 
-                    b.HasIndex("Priceid");
-
-                    b.ToTable("MoneyScope");
+                    b.ToTable("MoneyScope", (string)null);
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.MoneyServicePrice", b =>
@@ -388,7 +478,7 @@ namespace PostOffice.API.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("MoneyServicePrice");
+                    b.ToTable("MoneyServicePrice", (string)null);
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.OfficeBranch", b =>
@@ -405,7 +495,6 @@ namespace PostOffice.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("branch_phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("district_name")
@@ -431,26 +520,20 @@ namespace PostOffice.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<Guid?>("AppUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("ParcelServiceid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParcelTypeid")
-                        .HasColumnType("int");
-
                     b.Property<string>("desciption")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("note")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("order_status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<float>("parcel_height")
                         .HasColumnType("real");
@@ -469,61 +552,71 @@ namespace PostOffice.API.Migrations
 
                     b.Property<string>("payer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("payment_method")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("pincode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("receive_date")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("receiver_address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("receiver_email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("receiver_name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("receiver_phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("receiver_pincode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("send_date")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("sender_address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("sender_email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("sender_name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("sender_phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("sender_pincode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("service_id")
                         .HasColumnType("int");
@@ -531,35 +624,30 @@ namespace PostOffice.API.Migrations
                     b.Property<float>("total_charge")
                         .HasColumnType("real");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("user_id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<float>("vpp_value")
                         .HasColumnType("real");
 
                     b.HasKey("id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("parcel_type_id");
 
-                    b.HasIndex("ParcelServiceid");
+                    b.HasIndex("receiver_pincode");
 
-                    b.HasIndex("ParcelTypeid");
+                    b.HasIndex("sender_pincode");
 
-                    b.HasIndex("pincode");
+                    b.HasIndex("service_id");
 
-                    b.ToTable("ParcelOrder");
+                    b.HasIndex("user_id");
+
+                    b.ToTable("ParcelOrder", (string)null);
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.ParcelService", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("Priceid")
+                    b.Property<int>("service_id")
                         .HasColumnType("int");
 
                     b.Property<int>("delivery_time")
@@ -577,20 +665,18 @@ namespace PostOffice.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("id");
+                    b.HasKey("service_id");
 
-                    b.HasIndex("Priceid");
-
-                    b.ToTable("ParcelService");
+                    b.ToTable("ParcelServices", (string)null);
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.ParcelServicePrice", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("parcel_price_id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("parcel_price_id"), 1L, 1);
 
                     b.Property<int>("parcel_type_id")
                         .HasColumnType("int");
@@ -607,25 +693,20 @@ namespace PostOffice.API.Migrations
                     b.Property<int>("zone_type_id")
                         .HasColumnType("int");
 
-                    b.HasKey("id");
+                    b.HasKey("parcel_price_id");
 
-                    b.ToTable("ParcelServicePrice");
+                    b.ToTable("ParcelServicePrice", (string)null);
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.ParcelType", b =>
                 {
                     b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("Priceid")
                         .HasColumnType("int");
 
                     b.Property<string>("description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<float>("max_height")
                         .HasColumnType("real");
@@ -641,16 +722,15 @@ namespace PostOffice.API.Migrations
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<float>("over_dimension_rate")
                         .HasColumnType("real");
 
                     b.HasKey("id");
 
-                    b.HasIndex("Priceid");
-
-                    b.ToTable("ParcelType");
+                    b.ToTable("ParcelType", (string)null);
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.Pincode", b =>
@@ -672,20 +752,56 @@ namespace PostOffice.API.Migrations
                     b.ToTable("Pincodes", (string)null);
                 });
 
+            modelBuilder.Entity("PostOffice.API.Data.Models.TrackHistory", b =>
+                {
+                    b.Property<int>("track_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("track_id"), 1L, 1);
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("employee_id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("new_location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("new_status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("order_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("update_time")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("track_id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("order_id");
+
+                    b.ToTable("TrackHistories");
+                });
+
             modelBuilder.Entity("PostOffice.API.Data.Models.WeightScope", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("Priceid")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     b.Property<string>("description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("description");
 
                     b.Property<float>("max_weight")
                         .HasColumnType("real");
@@ -695,20 +811,12 @@ namespace PostOffice.API.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Priceid");
-
-                    b.ToTable("WeightScope");
+                    b.ToTable("WeightScope", (string)null);
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.ZoneType", b =>
                 {
                     b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("Priceid")
                         .HasColumnType("int");
 
                     b.Property<string>("zone_description")
@@ -717,43 +825,49 @@ namespace PostOffice.API.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Priceid");
-
-                    b.ToTable("ZoneType");
+                    b.ToTable("ZoneTypes", (string)null);
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.MoneyOrder", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.AppUser", null)
-                        .WithMany("MoneyOrders")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("PostOffice.API.Data.Models.MoneyServicePrice", "MoneyServicePrice")
                         .WithMany()
-                        .HasForeignKey("MoneyServicePriceid")
+                        .HasForeignKey("MoneyServicePriceid");
+
+                    b.HasOne("PostOffice.API.Data.Models.Pincode", "MoneyReceiverPincode")
+                        .WithMany("ReceiverPincodeMO")
+                        .HasForeignKey("receiver_pincode")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("PostOffice.API.Data.Models.Pincode", "MoneySenderPincode")
+                        .WithMany("SenderPincodeMO")
+                        .HasForeignKey("sender_pincode")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("PostOffice.API.Data.Models.AppUser", "AppUser")
+                        .WithMany("MoneyOrders")
+                        .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.Pincode", "Pincode")
-                        .WithMany()
-                        .HasForeignKey("pincode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("AppUser");
+
+                    b.Navigation("MoneyReceiverPincode");
+
+                    b.Navigation("MoneySenderPincode");
 
                     b.Navigation("MoneyServicePrice");
-
-                    b.Navigation("Pincode");
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.MoneyScope", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.MoneyServicePrice", "Price")
+                    b.HasOne("PostOffice.API.Data.Models.MoneyServicePrice", "MoneyServicePrice")
                         .WithMany("MoneyScopes")
-                        .HasForeignKey("Priceid")
+                        .HasForeignKey("id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Price");
+                    b.Navigation("MoneyServicePrice");
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.OfficeBranch", b =>
@@ -769,55 +883,67 @@ namespace PostOffice.API.Migrations
 
             modelBuilder.Entity("PostOffice.API.Data.Models.ParcelOrder", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.AppUser", null)
+                    b.HasOne("PostOffice.API.Data.Models.ParcelType", "ParcelType")
                         .WithMany("ParcelOrders")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("parcel_type_id")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("PostOffice.API.Data.Models.Pincode", "ParcelReceiverPincode")
+                        .WithMany("ReceiverPincodePO")
+                        .HasForeignKey("receiver_pincode")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("PostOffice.API.Data.Models.Pincode", "ParcelSenderPincode")
+                        .WithMany("SenderPincodePO")
+                        .HasForeignKey("sender_pincode")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("PostOffice.API.Data.Models.ParcelService", "ParcelService")
-                        .WithMany()
-                        .HasForeignKey("ParcelServiceid")
+                        .WithMany("ParcelOrders")
+                        .HasForeignKey("service_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.ParcelType", "ParcelType")
-                        .WithMany()
-                        .HasForeignKey("ParcelTypeid")
+                    b.HasOne("PostOffice.API.Data.Models.AppUser", "AppUser")
+                        .WithMany("ParcelOrders")
+                        .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.Pincode", "Pincode")
-                        .WithMany()
-                        .HasForeignKey("pincode")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("AppUser");
+
+                    b.Navigation("ParcelReceiverPincode");
+
+                    b.Navigation("ParcelSenderPincode");
 
                     b.Navigation("ParcelService");
 
                     b.Navigation("ParcelType");
-
-                    b.Navigation("Pincode");
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.ParcelService", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "Price")
+                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "ParcelServicePrice")
                         .WithMany("ParcelServices")
-                        .HasForeignKey("Priceid")
+                        .HasForeignKey("service_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Price");
+                    b.Navigation("ParcelServicePrice");
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.ParcelType", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "Price")
+                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "ParcelServicePrice")
                         .WithMany("ParcelTypes")
-                        .HasForeignKey("Priceid")
+                        .HasForeignKey("id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Price");
+                    b.Navigation("ParcelServicePrice");
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.Pincode", b =>
@@ -831,30 +957,59 @@ namespace PostOffice.API.Migrations
                     b.Navigation("Area");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.WeightScope", b =>
+            modelBuilder.Entity("PostOffice.API.Data.Models.TrackHistory", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "Price")
-                        .WithMany("WeightScopes")
-                        .HasForeignKey("Priceid")
+                    b.HasOne("PostOffice.API.Data.Models.AppUser", "Employee")
+                        .WithMany("Histories")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Price");
+                    b.HasOne("PostOffice.API.Data.Models.ParcelOrder", "ParcelOrder")
+                        .WithMany("TrackHistories")
+                        .HasForeignKey("order_id")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("ParcelOrder");
+                });
+
+            modelBuilder.Entity("PostOffice.API.Data.Models.WeightScope", b =>
+                {
+                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "ParcelServicePrice")
+                        .WithMany("WeightScopes")
+                        .HasForeignKey("id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ParcelServicePrice");
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.ZoneType", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "Price")
+                    b.HasOne("PostOffice.API.Data.Models.MoneyServicePrice", "MoneyServicePrice")
                         .WithMany("ZoneTypes")
-                        .HasForeignKey("Priceid")
+                        .HasForeignKey("id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Price");
+                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "ParcelServicePrice")
+                        .WithMany("ZoneTypes")
+                        .HasForeignKey("id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MoneyServicePrice");
+
+                    b.Navigation("ParcelServicePrice");
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.AppUser", b =>
                 {
+                    b.Navigation("Histories");
+
                     b.Navigation("MoneyOrders");
 
                     b.Navigation("ParcelOrders");
@@ -868,6 +1023,18 @@ namespace PostOffice.API.Migrations
             modelBuilder.Entity("PostOffice.API.Data.Models.MoneyServicePrice", b =>
                 {
                     b.Navigation("MoneyScopes");
+
+                    b.Navigation("ZoneTypes");
+                });
+
+            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelOrder", b =>
+                {
+                    b.Navigation("TrackHistories");
+                });
+
+            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelService", b =>
+                {
+                    b.Navigation("ParcelOrders");
                 });
 
             modelBuilder.Entity("PostOffice.API.Data.Models.ParcelServicePrice", b =>
@@ -881,9 +1048,22 @@ namespace PostOffice.API.Migrations
                     b.Navigation("ZoneTypes");
                 });
 
+            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelType", b =>
+                {
+                    b.Navigation("ParcelOrders");
+                });
+
             modelBuilder.Entity("PostOffice.API.Data.Models.Pincode", b =>
                 {
                     b.Navigation("OfficeBranches");
+
+                    b.Navigation("ReceiverPincodeMO");
+
+                    b.Navigation("ReceiverPincodePO");
+
+                    b.Navigation("SenderPincodeMO");
+
+                    b.Navigation("SenderPincodePO");
                 });
 #pragma warning restore 612, 618
         }

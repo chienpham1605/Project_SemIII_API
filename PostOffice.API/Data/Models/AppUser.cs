@@ -4,9 +4,9 @@ namespace PostOffice.API.Data.Models
 {
     public class AppUser : IdentityUser<Guid>
     {
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         public DateTime Create_date { get; set; }
 
@@ -14,6 +14,6 @@ namespace PostOffice.API.Data.Models
 
         public ICollection<ParcelOrder> ParcelOrders { get; set; }
 
-        
+        public ICollection<TrackHistory> Histories { get; set; }
     }
 }

@@ -1,9 +1,8 @@
-﻿using System;
-namespace PostOffice.API.Data.Enums;
-
-	public enum TransferStatus()
+﻿namespace PostOffice.API.Data.Enums
 {
-    InActive,
-    Active
-
+    public enum TransferStatus
+    {
+        InActive,
+            Active
+    }
 }
