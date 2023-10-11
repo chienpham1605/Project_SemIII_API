@@ -15,11 +15,11 @@ namespace PostOffice.API.Data.Configurations
 
             builder.Property(x => x.sender_name).IsRequired().IsUnicode(true).HasMaxLength(50);
             builder.Property(x => x.sender_name).IsRequired().IsUnicode(true).HasMaxLength(50);
-
+           
             builder.Property(x => x.sender_phone).IsRequired().HasMaxLength(10);
             builder.Property(x => x.sender_address).IsRequired().IsUnicode(true).HasMaxLength(200);
             builder.Property(x => x.receiver_name).IsRequired().IsUnicode(true).HasMaxLength(50);
-
+          
             builder.Property(x => x.receiver_phone).IsRequired().HasMaxLength(10);
             builder.Property(x => x.receiver_address).IsRequired().IsUnicode(true).HasMaxLength(200);
 
@@ -42,7 +42,7 @@ namespace PostOffice.API.Data.Configurations
 
             builder.HasOne(d => d.MoneySenderPincode)
    .WithMany(p => p.SenderPincodeMO)
-   .HasForeignKey(d => d.sender_pincode).OnDelete(DeleteBehavior.NoAction);
+   .HasForeignKey(d => d.sender_pincode).OnDelete(DeleteBehavior.NoAction); 
 
             builder.HasOne(d => d.MoneyReceiverPincode)
        .WithMany(p => p.ReceiverPincodeMO)
@@ -50,6 +50,5 @@ namespace PostOffice.API.Data.Configurations
 
 
         }
-
     }
 }

@@ -95,12 +95,6 @@ namespace PostOffice.API.Data.Context
 
         public virtual DbSet<ZoneType> ZoneTypes { get; set; }
 
-        //public DbSet<PostOffice.API.Data.DTOs.MoneyScope.MoneyScopeDTO>? MoneyScopeCreateDTO { get; set; }
-
-        //public DbSet<PostOffice.API.Data.DTOs.ZoneType.ZoneTypeDTO>? ZoneTypeDTO { get; set; }
-    
-        //public DbSet<PostOffice.API.Data.DTOs.MoneyServicePriceDTO.MoneyServicePriceDTO>? MoneyServicePriceDTO { get; set; }
-
 
 
     }

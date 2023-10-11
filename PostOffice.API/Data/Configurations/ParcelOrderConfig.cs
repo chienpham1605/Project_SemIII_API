@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
 using PostOffice.API.Data.Models;
 
 namespace PostOffice.API.Data.Configurations
@@ -52,7 +51,6 @@ namespace PostOffice.API.Data.Configurations
             builder.Property(e => e.receiver_phone)
                 .HasMaxLength(50)
                 .IsRequired();
-
             builder.Property(e => e.sender_address)
                 .HasMaxLength(50)
                 .IsRequired();
@@ -81,7 +79,6 @@ namespace PostOffice.API.Data.Configurations
             builder.HasMany(d => d.TrackHistories).WithOne(p => p.ParcelOrder)
               .HasForeignKey(d => d.order_id)
               .OnDelete(DeleteBehavior.NoAction);
-
 
         }
     }
