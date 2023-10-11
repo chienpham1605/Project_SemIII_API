@@ -6,6 +6,7 @@
 .vs/
 bin/
 obj/
+/Migrations/*.cs
 
 # User-specific files
 *.rsuser

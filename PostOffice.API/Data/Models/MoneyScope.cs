@@ -7,6 +7,8 @@
         public float max_value { get; set;}
         public string? description { get; set; }
 
+        public int MoneyServicePriceId { get; set; }
+
         public MoneyServicePrice MoneyServicePrice { get; set; }
     }
 }

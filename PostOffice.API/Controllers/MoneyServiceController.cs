@@ -40,63 +40,28 @@ namespace PostOffice.API.Controllers
             return ListMSP;
         }
 
-       
-        //[HttpPut]
-        //[Route("UpdateMoneyService")]
-        //public async Task<List<MoneyServicePriceDTO>>UpdateMoneyServicePriceDTO(MoneyServicePriceDTO moneyServicePriceDTO)
-        //{
-        //    MoneyServicePrice UDMSP = await _context.MoneyServices.FirstAsync(moneyServicePriceDTO.id){
-        //        if(UDMSP != null)
-        //        {
-        //            UDMSP.money_scope_id = moneyServicePriceDTO.money_scope_id;
-        //            UDMSP.zone_type_id = moneyServicePriceDTO.zone_type_id;
-        //            UDMSP.fee = moneyServicePriceDTO.fee;
 
-        //            await _context.SaveChangesAsync();
-        //        };
-        //        List<MoneyServicePriceDTO> UpdateMoneyService = await GetMoneyServiceDTOList();
-        //        return UpdateMoneyService;
-        //    }
-        //}
-
-        // POST: api/MoneyService
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<MoneyServicePriceDTO>> PostMoneyServicePriceDTO(MoneyServicePriceDTO moneyServicePriceDTO)
+        [HttpPut]
+        [Route("UpdateMoneyService")]
+        public async Task<bool> UpdateMoneyServicePriceDTO(MoneyServicePriceDTO moneyServicePriceDTO)
         {
-          if (_context.MoneyServicePriceDTO == null)
-          {
-              return Problem("Entity set 'AppDbContext.MoneyServicePriceDTO'  is null.");
-          }
-            _context.MoneyServicePriceDTO.Add(moneyServicePriceDTO);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetMoneyServicePriceDTO", new { id = moneyServicePriceDTO.id }, moneyServicePriceDTO);
-        }
-
-        // DELETE: api/MoneyService/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMoneyServicePriceDTO(int id)
-        {
-            if (_context.MoneyServicePriceDTO == null)
+            MoneyServicePrice? UDMSP = await _context.MoneyServices.FindAsync(moneyServicePriceDTO.id);
+            bool isUpdated = false;
+            if (UDMSP != null)
             {
-                return NotFound();
-            }
-            var moneyServicePriceDTO = await _context.MoneyServicePriceDTO.FindAsync(id);
-            if (moneyServicePriceDTO == null)
-            {
-                return NotFound();
-            }
+                UDMSP.money_scope_id = moneyServicePriceDTO.money_scope_id;
+                UDMSP.zone_type_id = moneyServicePriceDTO.zone_type_id;
+                UDMSP.fee = moneyServicePriceDTO.fee;
 
-            _context.MoneyServicePriceDTO.Remove(moneyServicePriceDTO);
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                isUpdated = true;
+            };
+            //List<MoneyServicePriceDTO> UpdateMoneyService = await GetMoneyServiceDTOList();
 
-            return NoContent();
+            return isUpdated;
+
         }
 
-        private bool MoneyServicePriceDTOExists(int id)
-        {
-            return (_context.MoneyServicePriceDTO?.Any(e => e.id == id)).GetValueOrDefault();
-        }
+
     }
 }

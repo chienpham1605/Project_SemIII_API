@@ -42,52 +42,99 @@ namespace PostOffice.API.Data.Extensions
                 UserId = adminId
             });
 
+           modelBuilder.Entity<MoneyServicePrice>().HasData(new MoneyServicePrice
+            {
+                id = 1,
+                zone_type_id = 1,
+                money_scope_id = 1,
+                fee = 200000
+            });
+
             modelBuilder.Entity<MoneyScope>().HasData(new MoneyScope
             {
                 id = 1,
                 min_value = 1,
                 max_value = 1000000,
                 description = "Under one million",
+                MoneyServicePriceId = 1,
+            });
 
-            },
-                new MoneyScope
-                {
-                    id = 2,
-                    min_value = 1000001,
-                    max_value = 5000000,
-                    description = "1 - 5 million",
-                },
-                new MoneyScope
-                {
-                    id = 3,
-                    min_value = 50000001,
-                    max_value = 20000000,
-                    description = "5 -20 million",
-                },
-                new MoneyScope
-                {
-                    id = 4,
-                    min_value = 200000001,
-                    max_value = 500000000,
-                    description = "20 -50 million",
-                },
-                new MoneyScope
-                {
-                    id = 5,
-                    min_value = 500000001,
-                    max_value = 1000000000,
-                    description = "Over 50 million",
-                });
+            modelBuilder.Entity<Area>().HasData(new Area
+            {
+                id = 1,
+                area_name = "1",
+                PincodeId = "700000",
+                
+            });
 
-                modelBuilder.Entity<MoneyServicePrice>().HasData(
-                new MoneyServicePrice
+            modelBuilder.Entity<Pincode>().HasData(
+                new Pincode
                 {
-                    id = 1,
-                    zone_type_id = 6,
-                    money_scope_id = 6,
-                    fee = 200000,
+                    area_id = 1,
+                    city_name = "Ho Chi Minh",
+                    pincode = "700000",
+
                 }
-            );
+         );
+
+
+            //new MoneyScope
+            //{
+            //    id = 2,
+            //    min_value = 1000001,
+            //    max_value = 5000000,
+            //    description = "1 - 5 million",
+            //    MoneyServicePrice = new MoneyServicePrice
+            //    {
+            //        id = 2,
+            //        zone_type_id = 1,
+            //        money_scope_id = 1,
+            //        fee = 200000,
+            //    }
+            //},
+            //new MoneyScope
+            //{
+            //    id = 3,
+            //    min_value = 50000001,
+            //    max_value = 20000000,
+            //    description = "5 -20 million",
+            //    MoneyServicePrice = new MoneyServicePrice
+            //    {
+            //        id = 3,
+            //        zone_type_id = 1,
+            //        money_scope_id = 1,
+            //        fee = 200000,
+            //    }
+            //},
+            //new MoneyScope
+            //{
+            //    id = 4,
+            //    min_value = 200000001,
+            //    max_value = 500000000,
+            //    description = "20 -50 million",
+            //    MoneyServicePrice = new MoneyServicePrice
+            //    {
+            //        id = 3,
+            //        zone_type_id = 1,
+            //        money_scope_id = 1,
+            //        fee = 200000,
+            //    }
+            //},
+            //new MoneyScope
+            //{
+            //    id = 5,
+            //    min_value = 500000001,
+            //    max_value = 1000000000,
+            //    description = "Over 50 million",
+            //    MoneyServicePrice = new MoneyServicePrice
+            //    {
+            //        id = 4,
+            //        zone_type_id = 1,
+            //        money_scope_id = 1,
+            //        fee = 200000,
+            //    }
+            //}
+
         }
     }
 }
