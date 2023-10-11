@@ -13,20 +13,20 @@ namespace PostOffice.API.Data.Configurations
             builder.ToTable("ParcelOrder");
 
             builder.HasKey(e => e.id);
-            builder.Property(e => e.receive_date)
+          /*  builder.Property(e => e.receive_date)
                 .IsRowVersion()
                 .IsConcurrencyToken()
-                .IsRequired();
-            builder.Property(e => e.desciption)
+                .IsRequired();*/
+            builder.Property(e => e.description)
                 .HasMaxLength(200)
                 .IsRequired();
             builder.Property(e => e.note)
                 .HasMaxLength(50)
                 .IsRequired();
-            builder.Property(e => e.send_date)
+           /* builder.Property(e => e.send_date)
                 .IsRowVersion()
                 .IsConcurrencyToken()
-                .IsRequired();
+                .IsRequired();*/
             builder.Property(e => e.order_status)
                 .HasMaxLength(10)
                 .IsRequired();
@@ -42,7 +42,7 @@ namespace PostOffice.API.Data.Configurations
                 .HasMaxLength(10)
                 .IsRequired();
             builder.Property(e => e.receiver_address)
-                .HasMaxLength(10)
+                .HasMaxLength(200)
                 .IsRequired();
             builder.Property(e => e.receiver_email)
                 .HasMaxLength(50)
@@ -55,7 +55,7 @@ namespace PostOffice.API.Data.Configurations
                 .IsRequired();
            
             builder.Property(e => e.sender_address)
-                .HasMaxLength(50)
+                .HasMaxLength(200)
                 .IsRequired();
             builder.Property(e => e.sender_email)
                 .HasMaxLength(50)

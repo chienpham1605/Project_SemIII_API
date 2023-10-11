@@ -19,7 +19,4 @@ namespace PostOffice.API.Data.Models
         public virtual ICollection<MoneyOrder> ReceiverPincodeMO { get; set; }
 
     }
-
-
-
 }

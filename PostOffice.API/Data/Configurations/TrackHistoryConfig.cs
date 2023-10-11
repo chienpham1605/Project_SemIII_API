@@ -16,11 +16,8 @@ namespace PostOffice.API.Data.Configurations
             builder.Property(e => e.new_status)
                 .HasMaxLength(50)
                 .IsRequired();
-            builder.Property(e => e.update_time)
-                .IsRowVersion()
-                .IsConcurrencyToken();                
-            builder.HasOne(d => d.Employee).WithMany(p => p.Histories)
-                .HasForeignKey(d => d.employee_id);
+                         
+        
           
 
           

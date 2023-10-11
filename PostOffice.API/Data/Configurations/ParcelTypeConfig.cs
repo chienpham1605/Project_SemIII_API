@@ -14,10 +14,10 @@ namespace PostOffice.API.Data.Configurations
             builder.Property(e => e.over_dimension_rate).IsRequired();
             builder.Property(e => e.max_height).IsRequired();
             builder.Property(e => e.max_length).IsRequired();
-            builder.Property(e => e.max_weight).IsRequired();
-            builder.Property(e => e.max_weight).IsRequired();
+            builder.Property(e => e.max_width).IsRequired();
+           
             builder.Property(e => e.name)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsRequired();
             builder.Property(e => e.description)
               .HasMaxLength(500)

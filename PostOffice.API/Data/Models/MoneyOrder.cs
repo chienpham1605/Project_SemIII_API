@@ -1,7 +1,12 @@
-﻿namespace PostOffice.API.Data.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace PostOffice.API.Data.Models
 {
     public class MoneyOrder
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         //personal infor
         public Guid user_id { get; set; }
@@ -24,18 +29,14 @@
         public string transfer_status { get; set; }        
         public string note { get; set; }
         public float transfer_value { get; set; }
-        public float transfer_fee { get; set; }
-
-        //service infor
-        public int service_id { get; set; }
-        public int parcel_type_id { get; set; }
+        public float transfer_fee { get; set; }         
 
         //fee payment infor
         public string payer { get; set; }           
 
         //datetime infor
         public DateTime send_date { get; set; }
-        public DateTime receive_date { get; set; }
+        public DateTime? receive_date { get; set; }
 
         //charge infor         
         public float total_charge { get; set; }
@@ -44,6 +45,6 @@
         public Pincode MoneySenderPincode { get; set; }
         public Pincode MoneyReceiverPincode { get; set; }
         public AppUser AppUser { get; set; }             
-        public MoneyServicePrice MoneyServicePrice { get; set; }
+       /* public MoneyServicePrice MoneyServicePrice { get; set; }*/
     }
 }

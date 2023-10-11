@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PostOffice.API.Data.Context;
 using PostOffice.API.Data.Models;
+using PostOffice.API.Utilities.Mail.Models;
+using PostOffice.API.Utilities.Mail.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,19 +54,26 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuer = true,
         ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
         ValidAudience = configuration["JWT:ValidAudience"],
         ValidIssuer = configuration["JWT:ValidIssuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"])),
+        ClockSkew = TimeSpan.Zero
     };
 });
 
+
+//automapper
+builder.Services.AddAutoMapper(typeof(Program));
+
 //add email config
-/*var emailConfig = configuration
+var emailConfig = configuration
         .GetSection("EmailConfiguration")
         .Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
 
-builder.Services.AddScoped<IEmailSender, EmailSender>();*/
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -99,7 +108,13 @@ builder.Services.AddSwaggerGen(opt =>
     });
 });
 
-
+//CORS
+builder.Services.AddCors(options => options.AddPolicy(name: "FrontEndUI", 
+          policy =>
+          {
+              policy.WithOrigins("https://localhost:7077").AllowAnyMethod().AllowAnyHeader();
+          }      
+   ));
 
 var app = builder.Build();
 
@@ -110,13 +125,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors(builder =>
-{
-    builder.AllowAnyOrigin()
-    .AllowAnyMethod()
-    .AllowAnyHeader();
 
-});
+
+
+
+app.UseCors("FrontEndUI");
 
 app.UseHttpsRedirection();
 

@@ -5,8 +5,8 @@ namespace PostOffice.API.Data.Models
 {
     public class ParcelServicePrice
     {
-        //[Key]
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int parcel_price_id { get; set; }
         public int zone_type_id { get; set; }
         public int service_id { get; set; }

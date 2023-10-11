@@ -10,10 +10,16 @@ namespace PostOffice.API.Data.Models
 
         public DateTime Create_date { get; set; }
 
+        public string? PhoneNumber { get; set; }
+        public string? Address { get; set; }          
+        public string? Status { get; set; }
+
         public ICollection<MoneyOrder> MoneyOrders { get; set; }
 
         public ICollection<ParcelOrder> ParcelOrders { get; set; }
 
-        public ICollection<TrackHistory> Histories { get; set; }
+        public ICollection<HistoryEmployee> HistoryEmployees { get; set; }
+
+
     }
 }

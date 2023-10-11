@@ -24,8 +24,8 @@ namespace PostOffice.API.Data.Models
 
         //parcel infor
         public string order_status { get; set; }
-        public string desciption { get; set; }
-        public string note { get; set; }
+        public string description { get; set; }
+        public string? note { get; set; }
         public float parcel_length { get; set; }
         public float parcel_height { get; set; }
         public float parcel_width { get; set; }
@@ -41,7 +41,7 @@ namespace PostOffice.API.Data.Models
 
         //datetime infor
         public DateTime send_date { get; set; }
-        public DateTime receive_date { get; set; }
+        public DateTime? receive_date { get; set; }
 
         //charge infor
         public float vpp_value { get; set; }
