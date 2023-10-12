@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PostOffice.API.Data.Configurations;
 using PostOffice.API.Data.Extensions;
-using PostOffice.API.Data.Models;
+using Models;
 using System;
 using System.Data;
 using System.Reflection.Emit;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PostOffice.API.Data.Models;
+using Models;
 
 namespace PostOffice.API.Data.Extensions
 {

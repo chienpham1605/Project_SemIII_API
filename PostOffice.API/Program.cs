@@ -5,7 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PostOffice.API.Data.Context;
-using PostOffice.API.Data.Models;
+using Models;
+using PostOffice.API.Repositories.ParcelOrder;
+using PostOffice.API.Repositories.ParcelServciePrice;
+using PostOffice.API.Repositories.ParcelService;
+using PostOffice.API.Repositories.ParcelServicePrice;
+using PostOffice.API.Repositories.ParcelType;
+using PostOffice.API.Repositories.WeightScope;
+using PostOffice.API.Repositorities.WeightScope;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -67,8 +74,15 @@ builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();*/
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddScoped<IServicePriceRepository, ServicePriceService>();
+builder.Services.AddScoped<IParcelOrderRepository, ParcelOrderService>();
+builder.Services.AddScoped<IParcelTypeRepository, ParcelTypeService>();
+builder.Services.AddScoped<IWeightScopeRepository, WeightScopeService>();
+builder.Services.AddScoped<IParcelServiceRepository, ParcelServiceService>();
+
 
 
 

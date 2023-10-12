@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PostOffice.API.Data.Models;
+using Models;
 
 namespace PostOffice.API.Data.Configurations
 {
@@ -15,13 +15,13 @@ namespace PostOffice.API.Data.Configurations
             builder.Property(x => x.fee).IsRequired();
 
             // Xác định mối quan hệ với MoneyScope (một MoneyService thuộc về một MoneyScope)
-            builder.HasMany(x => x.MoneyScopes)
-                   .WithOne(m =>m.MoneyServicePrice)
-                   .HasForeignKey(m =>m.id);
+            builder.HasOne(x => x.MoneyScopes)
+                   .WithMany(m =>m.MoneyServicePrice)
+                   .HasForeignKey(m =>m.money_scope_id);
 
-            builder.HasMany(e => e.ZoneTypes)
-                   .WithOne(m => m.MoneyServicePrice)
-                   .HasForeignKey(w => w.id);
+            builder.HasOne(e => e.ZoneTypes)
+                   .WithMany(m => m.MoneyServicePrice)
+                   .HasForeignKey(w => w.zone_type_id);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PostOffice.API.Data.Models;
+using Models;
 using System.Diagnostics;
 
 namespace PostOffice.API.Data.Configurations

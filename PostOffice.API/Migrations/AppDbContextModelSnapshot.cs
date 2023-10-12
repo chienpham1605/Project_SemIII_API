@@ -126,7 +126,7 @@ namespace PostOffice.API.Migrations
                     b.ToTable("AppUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.AppRole", b =>
+            modelBuilder.Entity("Models.AppRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -154,14 +154,14 @@ namespace PostOffice.API.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "de576cec-2814-4679-936e-f0ca9956f0d6",
+                            ConcurrencyStamp = "1f3bb326-20d2-4a3d-abb3-890c6d5c0e6b",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.AppUser", b =>
+            modelBuilder.Entity("Models.AppUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -231,7 +231,7 @@ namespace PostOffice.API.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "275736da-9378-47d6-948a-f8a2a64b8ec2",
+                            ConcurrencyStamp = "78a7007c-0211-48ae-af5b-cda33296450d",
                             Create_date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "onlinepostofficegroup4@gmail.com",
                             EmailConfirmed = true,
@@ -240,7 +240,7 @@ namespace PostOffice.API.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "onlinepostofficegroup4@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFXVSyV6DPWFyGkewmgklJhh2vVLmWIIvkqo4pkOJW5r0tjdb3p4HzGGYQmYdhdRrg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAxJ3Qkwda6GWSiTa4wwqJ7fT4wFDCrBLriByK6I11gPdw0JXHm34xoBoDQR0uMwPQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -248,7 +248,7 @@ namespace PostOffice.API.Migrations
                         });
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.Area", b =>
+            modelBuilder.Entity("Models.Area", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -265,7 +265,7 @@ namespace PostOffice.API.Migrations
                     b.ToTable("Areas", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.MoneyOrder", b =>
+            modelBuilder.Entity("Models.MoneyOrder", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -386,11 +386,14 @@ namespace PostOffice.API.Migrations
                     b.ToTable("MoneyOrder", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.MoneyScope", b =>
+            modelBuilder.Entity("Models.MoneyScope", b =>
                 {
                     b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("description")
                         .IsRequired()
@@ -411,7 +414,7 @@ namespace PostOffice.API.Migrations
                     b.ToTable("MoneyScope", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.MoneyServicePrice", b =>
+            modelBuilder.Entity("Models.MoneyServicePrice", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -430,10 +433,14 @@ namespace PostOffice.API.Migrations
 
                     b.HasKey("id");
 
+                    b.HasIndex("money_scope_id");
+
+                    b.HasIndex("zone_type_id");
+
                     b.ToTable("MoneyServicePrice", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.OfficeBranch", b =>
+            modelBuilder.Entity("Models.OfficeBranch", b =>
                 {
                     b.Property<string>("id")
                         .HasColumnType("nvarchar(450)");
@@ -465,7 +472,7 @@ namespace PostOffice.API.Migrations
                     b.ToTable("OfficeBranchs", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelOrder", b =>
+            modelBuilder.Entity("Models.ParcelOrder", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -598,10 +605,13 @@ namespace PostOffice.API.Migrations
                     b.ToTable("ParcelOrder", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelService", b =>
+            modelBuilder.Entity("Models.ParcelService", b =>
                 {
                     b.Property<int>("service_id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("service_id"), 1L, 1);
 
                     b.Property<int>("delivery_time")
                         .HasColumnType("int");
@@ -623,7 +633,7 @@ namespace PostOffice.API.Migrations
                     b.ToTable("ParcelServices", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelServicePrice", b =>
+            modelBuilder.Entity("Models.ParcelServicePrice", b =>
                 {
                     b.Property<int>("parcel_price_id")
                         .ValueGeneratedOnAdd()
@@ -648,13 +658,24 @@ namespace PostOffice.API.Migrations
 
                     b.HasKey("parcel_price_id");
 
+                    b.HasIndex("parcel_type_id");
+
+                    b.HasIndex("scope_weight_id");
+
+                    b.HasIndex("service_id");
+
+                    b.HasIndex("zone_type_id");
+
                     b.ToTable("ParcelServicePrice", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelType", b =>
+            modelBuilder.Entity("Models.ParcelType", b =>
                 {
                     b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("description")
                         .IsRequired()
@@ -686,7 +707,7 @@ namespace PostOffice.API.Migrations
                     b.ToTable("ParcelType", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.Pincode", b =>
+            modelBuilder.Entity("Models.Pincode", b =>
                 {
                     b.Property<string>("pincode")
                         .HasColumnType("nvarchar(450)");
@@ -705,7 +726,7 @@ namespace PostOffice.API.Migrations
                     b.ToTable("Pincodes", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.TrackHistory", b =>
+            modelBuilder.Entity("Models.TrackHistory", b =>
                 {
                     b.Property<int>("track_id")
                         .ValueGeneratedOnAdd()
@@ -743,12 +764,14 @@ namespace PostOffice.API.Migrations
                     b.ToTable("TrackHistories");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.WeightScope", b =>
+            modelBuilder.Entity("Models.WeightScope", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("description")
                         .IsRequired()
@@ -767,10 +790,13 @@ namespace PostOffice.API.Migrations
                     b.ToTable("WeightScope", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ZoneType", b =>
+            modelBuilder.Entity("Models.ZoneType", b =>
                 {
                     b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("zone_description")
                         .IsRequired()
@@ -781,27 +807,27 @@ namespace PostOffice.API.Migrations
                     b.ToTable("ZoneTypes", (string)null);
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.MoneyOrder", b =>
+            modelBuilder.Entity("Models.MoneyOrder", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.MoneyServicePrice", "MoneyServicePrice")
+                    b.HasOne("Models.MoneyServicePrice", "MoneyServicePrice")
                         .WithMany()
                         .HasForeignKey("MoneyServicePriceid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.Pincode", "MoneyReceiverPincode")
+                    b.HasOne("Models.Pincode", "MoneyReceiverPincode")
                         .WithMany("ReceiverPincodeMO")
                         .HasForeignKey("receiver_pincode")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.Pincode", "MoneySenderPincode")
+                    b.HasOne("Models.Pincode", "MoneySenderPincode")
                         .WithMany("SenderPincodeMO")
                         .HasForeignKey("sender_pincode")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.AppUser", "AppUser")
+                    b.HasOne("Models.AppUser", "AppUser")
                         .WithMany("MoneyOrders")
                         .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -816,20 +842,28 @@ namespace PostOffice.API.Migrations
                     b.Navigation("MoneyServicePrice");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.MoneyScope", b =>
+            modelBuilder.Entity("Models.MoneyServicePrice", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.MoneyServicePrice", "MoneyServicePrice")
-                        .WithMany("MoneyScopes")
-                        .HasForeignKey("id")
+                    b.HasOne("Models.MoneyScope", "MoneyScopes")
+                        .WithMany("MoneyServicePrice")
+                        .HasForeignKey("money_scope_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("MoneyServicePrice");
+                    b.HasOne("Models.ZoneType", "ZoneTypes")
+                        .WithMany("MoneyServicePrice")
+                        .HasForeignKey("zone_type_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MoneyScopes");
+
+                    b.Navigation("ZoneTypes");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.OfficeBranch", b =>
+            modelBuilder.Entity("Models.OfficeBranch", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.Pincode", "Pincode")
+                    b.HasOne("Models.Pincode", "Pincode")
                         .WithMany("OfficeBranches")
                         .HasForeignKey("pincode")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -838,33 +872,33 @@ namespace PostOffice.API.Migrations
                     b.Navigation("Pincode");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelOrder", b =>
+            modelBuilder.Entity("Models.ParcelOrder", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.ParcelType", "ParcelType")
+                    b.HasOne("Models.ParcelType", "ParcelType")
                         .WithMany("ParcelOrders")
                         .HasForeignKey("parcel_type_id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.Pincode", "ParcelReceiverPincode")
+                    b.HasOne("Models.Pincode", "ParcelReceiverPincode")
                         .WithMany("ReceiverPincodePO")
                         .HasForeignKey("receiver_pincode")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.Pincode", "ParcelSenderPincode")
+                    b.HasOne("Models.Pincode", "ParcelSenderPincode")
                         .WithMany("SenderPincodePO")
                         .HasForeignKey("sender_pincode")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.ParcelService", "ParcelService")
+                    b.HasOne("Models.ParcelService", "ParcelService")
                         .WithMany("ParcelOrders")
                         .HasForeignKey("service_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.AppUser", "AppUser")
+                    b.HasOne("Models.AppUser", "AppUser")
                         .WithMany("ParcelOrders")
                         .HasForeignKey("user_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -881,31 +915,44 @@ namespace PostOffice.API.Migrations
                     b.Navigation("ParcelType");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelService", b =>
+            modelBuilder.Entity("Models.ParcelServicePrice", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "ParcelServicePrice")
-                        .WithMany("ParcelServices")
+                    b.HasOne("Models.ParcelType", "ParcelTypes")
+                        .WithMany("ParcelServicePrice")
+                        .HasForeignKey("parcel_type_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.WeightScope", "WeightScopes")
+                        .WithMany("ParcelServicePrice")
+                        .HasForeignKey("scope_weight_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Models.ParcelService", "ParcelServices")
+                        .WithMany("ParcelServicePrice")
                         .HasForeignKey("service_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ParcelServicePrice");
-                });
-
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelType", b =>
-                {
-                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "ParcelServicePrice")
-                        .WithMany("ParcelTypes")
-                        .HasForeignKey("id")
+                    b.HasOne("Models.ZoneType", "ZoneTypes")
+                        .WithMany("ParcelServicePrice")
+                        .HasForeignKey("zone_type_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ParcelServicePrice");
+                    b.Navigation("ParcelServices");
+
+                    b.Navigation("ParcelTypes");
+
+                    b.Navigation("WeightScopes");
+
+                    b.Navigation("ZoneTypes");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.Pincode", b =>
+            modelBuilder.Entity("Models.Pincode", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.Area", "Area")
+                    b.HasOne("Models.Area", "Area")
                         .WithMany("Pincodes")
                         .HasForeignKey("area_id")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -914,15 +961,15 @@ namespace PostOffice.API.Migrations
                     b.Navigation("Area");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.TrackHistory", b =>
+            modelBuilder.Entity("Models.TrackHistory", b =>
                 {
-                    b.HasOne("PostOffice.API.Data.Models.AppUser", "Employee")
+                    b.HasOne("Models.AppUser", "Employee")
                         .WithMany("Histories")
                         .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PostOffice.API.Data.Models.ParcelOrder", "ParcelOrder")
+                    b.HasOne("Models.ParcelOrder", "ParcelOrder")
                         .WithMany("TrackHistories")
                         .HasForeignKey("order_id")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -933,37 +980,7 @@ namespace PostOffice.API.Migrations
                     b.Navigation("ParcelOrder");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.WeightScope", b =>
-                {
-                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "ParcelServicePrice")
-                        .WithMany("WeightScopes")
-                        .HasForeignKey("id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ParcelServicePrice");
-                });
-
-            modelBuilder.Entity("PostOffice.API.Data.Models.ZoneType", b =>
-                {
-                    b.HasOne("PostOffice.API.Data.Models.MoneyServicePrice", "MoneyServicePrice")
-                        .WithMany("ZoneTypes")
-                        .HasForeignKey("id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PostOffice.API.Data.Models.ParcelServicePrice", "ParcelServicePrice")
-                        .WithMany("ZoneTypes")
-                        .HasForeignKey("id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MoneyServicePrice");
-
-                    b.Navigation("ParcelServicePrice");
-                });
-
-            modelBuilder.Entity("PostOffice.API.Data.Models.AppUser", b =>
+            modelBuilder.Entity("Models.AppUser", b =>
                 {
                     b.Navigation("Histories");
 
@@ -972,45 +989,36 @@ namespace PostOffice.API.Migrations
                     b.Navigation("ParcelOrders");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.Area", b =>
+            modelBuilder.Entity("Models.Area", b =>
                 {
                     b.Navigation("Pincodes");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.MoneyServicePrice", b =>
+            modelBuilder.Entity("Models.MoneyScope", b =>
                 {
-                    b.Navigation("MoneyScopes");
-
-                    b.Navigation("ZoneTypes");
+                    b.Navigation("MoneyServicePrice");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelOrder", b =>
+            modelBuilder.Entity("Models.ParcelOrder", b =>
                 {
                     b.Navigation("TrackHistories");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelService", b =>
+            modelBuilder.Entity("Models.ParcelService", b =>
                 {
                     b.Navigation("ParcelOrders");
+
+                    b.Navigation("ParcelServicePrice");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelServicePrice", b =>
-                {
-                    b.Navigation("ParcelServices");
-
-                    b.Navigation("ParcelTypes");
-
-                    b.Navigation("WeightScopes");
-
-                    b.Navigation("ZoneTypes");
-                });
-
-            modelBuilder.Entity("PostOffice.API.Data.Models.ParcelType", b =>
+            modelBuilder.Entity("Models.ParcelType", b =>
                 {
                     b.Navigation("ParcelOrders");
+
+                    b.Navigation("ParcelServicePrice");
                 });
 
-            modelBuilder.Entity("PostOffice.API.Data.Models.Pincode", b =>
+            modelBuilder.Entity("Models.Pincode", b =>
                 {
                     b.Navigation("OfficeBranches");
 
@@ -1021,6 +1029,18 @@ namespace PostOffice.API.Migrations
                     b.Navigation("SenderPincodeMO");
 
                     b.Navigation("SenderPincodePO");
+                });
+
+            modelBuilder.Entity("Models.WeightScope", b =>
+                {
+                    b.Navigation("ParcelServicePrice");
+                });
+
+            modelBuilder.Entity("Models.ZoneType", b =>
+                {
+                    b.Navigation("MoneyServicePrice");
+
+                    b.Navigation("ParcelServicePrice");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PostOffice.API.Data.Models;
+using Models;
 using System.Reflection.Emit;
 
 namespace PostOffice.API.Data.Configurations
@@ -33,7 +33,7 @@ namespace PostOffice.API.Data.Configurations
 
             builder.Property(x => x.send_date).IsRequired();
 
-            builder.Property(x => x.transfer_status).IsRequired();
+            //builder.Property(x => x.transfer_status).IsRequired();
 
             builder.Property(x => x.sender_national_identity_number).HasMaxLength(20);
 

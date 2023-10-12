@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PostOffice.API.Data.Models;
+using Models;
 
 namespace PostOffice.API.Data.Configurations
 {
@@ -14,8 +14,6 @@ namespace PostOffice.API.Data.Configurations
             builder.Property(p => p.description).IsRequired();
             builder.Property(p => p.delivery_time).IsRequired();
             builder.Property(p => p.status).IsRequired();
-
-            builder.HasOne(p => p.ParcelServicePrice).WithMany(a => a.ParcelServices).HasForeignKey(a => a.service_id).IsRequired();
 
             builder.HasMany(e => e.ParcelOrders)
                 .WithOne(o => o.ParcelService).HasForeignKey(o => o.service_id);

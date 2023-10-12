@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PostOffice.API.Data.Models;
+using Models;
 
 namespace PostOffice.API.Data.Configurations
 {

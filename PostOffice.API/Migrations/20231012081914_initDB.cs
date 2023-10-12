@@ -136,35 +136,81 @@ namespace PostOffice.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MoneyServicePrice",
+                name: "MoneyScope",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    zone_type_id = table.Column<int>(type: "int", nullable: false),
-                    money_scope_id = table.Column<int>(type: "int", nullable: false),
-                    fee = table.Column<float>(type: "real", nullable: false)
+                    min_value = table.Column<float>(type: "real", nullable: false),
+                    max_value = table.Column<float>(type: "real", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MoneyServicePrice", x => x.id);
+                    table.PrimaryKey("PK_MoneyScope", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ParcelServicePrice",
+                name: "ParcelServices",
                 columns: table => new
                 {
-                    parcel_price_id = table.Column<int>(type: "int", nullable: false)
+                    service_id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    zone_type_id = table.Column<int>(type: "int", nullable: false),
-                    service_id = table.Column<int>(type: "int", nullable: false),
-                    parcel_type_id = table.Column<int>(type: "int", nullable: false),
-                    scope_weight_id = table.Column<int>(type: "int", nullable: false),
-                    service_price = table.Column<float>(type: "real", nullable: false)
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    delivery_time = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ParcelServicePrice", x => x.parcel_price_id);
+                    table.PrimaryKey("PK_ParcelServices", x => x.service_id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ParcelType",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    max_length = table.Column<float>(type: "real", nullable: false),
+                    max_width = table.Column<float>(type: "real", nullable: false),
+                    max_height = table.Column<float>(type: "real", nullable: false),
+                    max_weight = table.Column<float>(type: "real", nullable: false),
+                    over_dimension_rate = table.Column<float>(type: "real", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParcelType", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WeightScope",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    min_weight = table.Column<float>(type: "real", nullable: false),
+                    max_weight = table.Column<float>(type: "real", nullable: false),
+                    description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WeightScope", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ZoneTypes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    zone_description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ZoneTypes", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,170 +233,71 @@ namespace PostOffice.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MoneyScope",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    min_value = table.Column<float>(type: "real", nullable: false),
-                    max_value = table.Column<float>(type: "real", nullable: false),
-                    description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MoneyScope", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_MoneyScope_MoneyServicePrice_id",
-                        column: x => x.id,
-                        principalTable: "MoneyServicePrice",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ParcelServices",
-                columns: table => new
-                {
-                    service_id = table.Column<int>(type: "int", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    delivery_time = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ParcelServices", x => x.service_id);
-                    table.ForeignKey(
-                        name: "FK_ParcelServices_ParcelServicePrice_service_id",
-                        column: x => x.service_id,
-                        principalTable: "ParcelServicePrice",
-                        principalColumn: "parcel_price_id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ParcelType",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    max_length = table.Column<float>(type: "real", nullable: false),
-                    max_width = table.Column<float>(type: "real", nullable: false),
-                    max_height = table.Column<float>(type: "real", nullable: false),
-                    max_weight = table.Column<float>(type: "real", nullable: false),
-                    over_dimension_rate = table.Column<float>(type: "real", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ParcelType", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_ParcelType_ParcelServicePrice_id",
-                        column: x => x.id,
-                        principalTable: "ParcelServicePrice",
-                        principalColumn: "parcel_price_id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WeightScope",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    min_weight = table.Column<float>(type: "real", nullable: false),
-                    max_weight = table.Column<float>(type: "real", nullable: false),
-                    description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WeightScope", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_WeightScope_ParcelServicePrice_id",
-                        column: x => x.id,
-                        principalTable: "ParcelServicePrice",
-                        principalColumn: "parcel_price_id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ZoneTypes",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false),
-                    zone_description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ZoneTypes", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_ZoneTypes_MoneyServicePrice_id",
-                        column: x => x.id,
-                        principalTable: "MoneyServicePrice",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ZoneTypes_ParcelServicePrice_id",
-                        column: x => x.id,
-                        principalTable: "ParcelServicePrice",
-                        principalColumn: "parcel_price_id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MoneyOrder",
+                name: "MoneyServicePrice",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    sender_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    sender_pincode = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    sender_address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    sender_phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    sender_email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    sender_national_identity_number = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    receiver_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    receiver_pincode = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    receiver_address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    receiver_phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    receiver_email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    receiver_national_identity_number = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    transfer_status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    transfer_value = table.Column<float>(type: "real", nullable: false),
-                    transfer_fee = table.Column<float>(type: "real", nullable: false),
-                    service_id = table.Column<int>(type: "int", nullable: false),
-                    parcel_type_id = table.Column<int>(type: "int", nullable: false),
-                    payer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    send_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    receive_date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    total_charge = table.Column<float>(type: "real", nullable: false),
-                    MoneyServicePriceid = table.Column<int>(type: "int", nullable: false)
+                    zone_type_id = table.Column<int>(type: "int", nullable: false),
+                    money_scope_id = table.Column<int>(type: "int", nullable: false),
+                    fee = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MoneyOrder", x => x.id);
+                    table.PrimaryKey("PK_MoneyServicePrice", x => x.id);
                     table.ForeignKey(
-                        name: "FK_MoneyOrder_AppUsers_user_id",
-                        column: x => x.user_id,
-                        principalTable: "AppUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MoneyOrder_MoneyServicePrice_MoneyServicePriceid",
-                        column: x => x.MoneyServicePriceid,
-                        principalTable: "MoneyServicePrice",
+                        name: "FK_MoneyServicePrice_MoneyScope_money_scope_id",
+                        column: x => x.money_scope_id,
+                        principalTable: "MoneyScope",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MoneyOrder_Pincodes_receiver_pincode",
-                        column: x => x.receiver_pincode,
-                        principalTable: "Pincodes",
-                        principalColumn: "pincode");
+                        name: "FK_MoneyServicePrice_ZoneTypes_zone_type_id",
+                        column: x => x.zone_type_id,
+                        principalTable: "ZoneTypes",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ParcelServicePrice",
+                columns: table => new
+                {
+                    parcel_price_id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    zone_type_id = table.Column<int>(type: "int", nullable: false),
+                    service_id = table.Column<int>(type: "int", nullable: false),
+                    parcel_type_id = table.Column<int>(type: "int", nullable: false),
+                    scope_weight_id = table.Column<int>(type: "int", nullable: false),
+                    service_price = table.Column<float>(type: "real", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParcelServicePrice", x => x.parcel_price_id);
                     table.ForeignKey(
-                        name: "FK_MoneyOrder_Pincodes_sender_pincode",
-                        column: x => x.sender_pincode,
-                        principalTable: "Pincodes",
-                        principalColumn: "pincode");
+                        name: "FK_ParcelServicePrice_ParcelServices_service_id",
+                        column: x => x.service_id,
+                        principalTable: "ParcelServices",
+                        principalColumn: "service_id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ParcelServicePrice_ParcelType_parcel_type_id",
+                        column: x => x.parcel_type_id,
+                        principalTable: "ParcelType",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ParcelServicePrice_WeightScope_scope_weight_id",
+                        column: x => x.scope_weight_id,
+                        principalTable: "WeightScope",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ParcelServicePrice_ZoneTypes_zone_type_id",
+                        column: x => x.zone_type_id,
+                        principalTable: "ZoneTypes",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -441,6 +388,64 @@ namespace PostOffice.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MoneyOrder",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    sender_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    sender_pincode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    sender_address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    sender_phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    sender_email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    sender_national_identity_number = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    receiver_name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    receiver_pincode = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    receiver_address = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    receiver_phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    receiver_email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    receiver_national_identity_number = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    transfer_status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    note = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    transfer_value = table.Column<float>(type: "real", nullable: false),
+                    transfer_fee = table.Column<float>(type: "real", nullable: false),
+                    service_id = table.Column<int>(type: "int", nullable: false),
+                    parcel_type_id = table.Column<int>(type: "int", nullable: false),
+                    payer = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    send_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    receive_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    total_charge = table.Column<float>(type: "real", nullable: false),
+                    MoneyServicePriceid = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MoneyOrder", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_MoneyOrder_AppUsers_user_id",
+                        column: x => x.user_id,
+                        principalTable: "AppUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MoneyOrder_MoneyServicePrice_MoneyServicePriceid",
+                        column: x => x.MoneyServicePriceid,
+                        principalTable: "MoneyServicePrice",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MoneyOrder_Pincodes_receiver_pincode",
+                        column: x => x.receiver_pincode,
+                        principalTable: "Pincodes",
+                        principalColumn: "pincode");
+                    table.ForeignKey(
+                        name: "FK_MoneyOrder_Pincodes_sender_pincode",
+                        column: x => x.sender_pincode,
+                        principalTable: "Pincodes",
+                        principalColumn: "pincode");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TrackHistories",
                 columns: table => new
                 {
@@ -472,7 +477,7 @@ namespace PostOffice.API.Migrations
             migrationBuilder.InsertData(
                 table: "AppRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "de576cec-2814-4679-936e-f0ca9956f0d6", "Administrator role", "admin", "admin" });
+                values: new object[] { new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"), "1f3bb326-20d2-4a3d-abb3-890c6d5c0e6b", "Administrator role", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AppUserRoles",
@@ -482,7 +487,7 @@ namespace PostOffice.API.Migrations
             migrationBuilder.InsertData(
                 table: "AppUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Create_date", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "275736da-9378-47d6-948a-f8a2a64b8ec2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "onlinepostofficegroup4@gmail.com", true, "Pham", "Chien", false, null, "onlinepostofficegroup4@gmail.com", "admin", "AQAAAAEAACcQAAAAEFXVSyV6DPWFyGkewmgklJhh2vVLmWIIvkqo4pkOJW5r0tjdb3p4HzGGYQmYdhdRrg==", null, false, "", false, "admin" });
+                values: new object[] { new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"), 0, "78a7007c-0211-48ae-af5b-cda33296450d", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "onlinepostofficegroup4@gmail.com", true, "Pham", "Chien", false, null, "onlinepostofficegroup4@gmail.com", "admin", "AQAAAAEAACcQAAAAEAxJ3Qkwda6GWSiTa4wwqJ7fT4wFDCrBLriByK6I11gPdw0JXHm34xoBoDQR0uMwPQ==", null, false, "", false, "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_MoneyOrder_MoneyServicePriceid",
@@ -503,6 +508,16 @@ namespace PostOffice.API.Migrations
                 name: "IX_MoneyOrder_user_id",
                 table: "MoneyOrder",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MoneyServicePrice_money_scope_id",
+                table: "MoneyServicePrice",
+                column: "money_scope_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MoneyServicePrice_zone_type_id",
+                table: "MoneyServicePrice",
+                column: "zone_type_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OfficeBranchs_pincode",
@@ -533,6 +548,26 @@ namespace PostOffice.API.Migrations
                 name: "IX_ParcelOrder_user_id",
                 table: "ParcelOrder",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ParcelServicePrice_parcel_type_id",
+                table: "ParcelServicePrice",
+                column: "parcel_type_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ParcelServicePrice_scope_weight_id",
+                table: "ParcelServicePrice",
+                column: "scope_weight_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ParcelServicePrice_service_id",
+                table: "ParcelServicePrice",
+                column: "service_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ParcelServicePrice_zone_type_id",
+                table: "ParcelServicePrice",
+                column: "zone_type_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pincodes_area_id",
@@ -574,25 +609,28 @@ namespace PostOffice.API.Migrations
                 name: "MoneyOrder");
 
             migrationBuilder.DropTable(
-                name: "MoneyScope");
+                name: "OfficeBranchs");
 
             migrationBuilder.DropTable(
-                name: "OfficeBranchs");
+                name: "ParcelServicePrice");
 
             migrationBuilder.DropTable(
                 name: "TrackHistories");
 
             migrationBuilder.DropTable(
-                name: "WeightScope");
+                name: "MoneyServicePrice");
 
             migrationBuilder.DropTable(
-                name: "ZoneTypes");
+                name: "WeightScope");
 
             migrationBuilder.DropTable(
                 name: "ParcelOrder");
 
             migrationBuilder.DropTable(
-                name: "MoneyServicePrice");
+                name: "MoneyScope");
+
+            migrationBuilder.DropTable(
+                name: "ZoneTypes");
 
             migrationBuilder.DropTable(
                 name: "AppUsers");
@@ -605,9 +643,6 @@ namespace PostOffice.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Pincodes");
-
-            migrationBuilder.DropTable(
-                name: "ParcelServicePrice");
 
             migrationBuilder.DropTable(
                 name: "Areas");
