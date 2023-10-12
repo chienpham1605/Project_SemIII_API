@@ -5,7 +5,7 @@
 
 .vs/
 bin/
-obj/
+/obj/
 /Migrations/*.cs
 
 # User-specific files

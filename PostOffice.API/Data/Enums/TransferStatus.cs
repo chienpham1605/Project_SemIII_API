@@ -2,7 +2,10 @@
 {
     public enum TransferStatus
     {
-        InActive,
-            Active
+        
+        Pending,
+        Processing,
+        Successfull,
+        Failed,
     }
 }

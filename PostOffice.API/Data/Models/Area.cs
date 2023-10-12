@@ -9,6 +9,6 @@ namespace PostOffice.API.Data.Models
         public string area_name { get; set; }
         public ICollection<Pincode>? Pincodes { get; set; }
 
-        public string PincodeId { get; set; }
+     
     }
 }

@@ -17,14 +17,14 @@ namespace PostOffice.API.Data.Configurations
             builder.Property(e => e.max_weight).IsRequired();
             builder.Property(e => e.max_weight).IsRequired();
             builder.Property(e => e.name)
-                .HasMaxLength(10)
+                .HasMaxLength(100)
                 .IsRequired();
             builder.Property(e => e.description)
               .HasMaxLength(500)
               .IsRequired();
             builder.HasMany(p => p.ParcelOrders)
-                .WithOne(p => p.ParcelType).HasForeignKey(p => p.parcel_type_id).OnDelete(DeleteBehavior.NoAction); ;
-            
+                .WithOne(p => p.ParcelType).HasForeignKey(p => p.parcel_type_id).OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

@@ -15,7 +15,7 @@ namespace PostOffice.API.Data.Configurations
                 .IsRowVersion()
                 .IsConcurrencyToken()
                 .IsRequired();
-            builder.Property(e => e.desciption)
+            builder.Property(e => e.description)
                 .HasMaxLength(200)
                 .IsRequired();
             builder.Property(e => e.note)
@@ -30,7 +30,7 @@ namespace PostOffice.API.Data.Configurations
                 .IsRequired();
             builder.Property(e => e.parcel_height).IsRequired();
             builder.Property(e => e.parcel_height).IsRequired();
-            /* builder.Property(e => e.parcel_type_id).IsRequired();*/
+            builder.Property(e => e.parcel_type_id).IsRequired();
             builder.Property(e => e.parcel_weight).IsRequired();
             builder.Property(e => e.parcel_width).IsRequired();
             builder.Property(e => e.payment_method)
@@ -40,7 +40,7 @@ namespace PostOffice.API.Data.Configurations
                 .HasMaxLength(10)
                 .IsRequired();
             builder.Property(e => e.receiver_address)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsRequired();
             builder.Property(e => e.receiver_email)
                 .HasMaxLength(50)

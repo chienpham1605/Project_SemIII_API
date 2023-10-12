@@ -156,7 +156,7 @@ namespace PostOffice.API.Data.Extensions
 
             //parcel type
             modelBuilder.Entity<ParcelType>().HasData(
-                new ParcelType { id = 1, max_length = 100, max_height = 100, max_width = 100, name = "Document", description = "Document", over_dimension_rate = 10} , 
+                new ParcelType { id = 1, max_length = 100, max_height = 100, max_width = 100, name = "Document", description = "Document", over_dimension_rate = 10 },
                 new ParcelType { id = 2, max_length = 300, max_height = 300, max_width = 300, name = "Merchandise", description = "Merchandise", over_dimension_rate = 15 }
                 );
 
@@ -326,7 +326,7 @@ namespace PostOffice.API.Data.Extensions
                     receiver_email = "lvbay@gmail.com",
                     receiver_national_identity_number = "0789262637",
 
-                    transfer_status = "pending",
+                    transfer_status = Enums.TransferStatus.Pending,
                     note ="pay for home rental",
                     transfer_value = 30000000,
                     transfer_fee = 15000,
